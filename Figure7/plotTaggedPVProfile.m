@@ -1,0 +1,16 @@
+function plotTaggedPVProfile(pathData)
+
+    pathAnal = fullfile(pathData,'Analysis\');
+    if(~exist(pathAnal))
+        mkdir(pathAnal);
+    end
+    
+    load(fullfile(pathData,'initPeakIntAllRec.mat'),'modInt1AL');
+    load(fullfile(pathData,'initPeakAllPyrIntTaggedRec.mat'),'InitAllTag','IntRiseTag');
+    
+    plotAvgFRProfileCmp(modInt1AL.timeStepRun,...
+                        InitAllTag.avgFRProfileInt(IntRiseTag.idxRise{3},:),...
+                        InitAllTag.avgFRProfileBadInt(IntRiseTag.idxRise{3},:),...
+                        ['FR IntRise Good/Bad C' num2str(3)],...
+                        ['Int_FRProfileIntRiseGoodBadC' num2str(3) '-Tagged'],...
+                        pathAnal,[0 45],[{'Good'} {'Bad'}])

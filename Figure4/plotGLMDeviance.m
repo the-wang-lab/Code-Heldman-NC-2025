@@ -1,0 +1,17 @@
+function plotGLMDeviance(pathData)
+   
+    pathS = fullfile(pathData, 'Analysis\');
+    if(~exist(pathS))
+        mkdir(pathS);
+    end
+
+    % PyrUp neurons
+    load(fullfile(pathData,'GLM_distance_time_PyrUp.mat'), 'all_glm_results');
+
+    plot_time_vs_distance_deviance_loglog(pathS, 'GLM_devtime_devdist_PyrUp', all_glm_results);
+
+    % PyrDown neurons
+    load(fullfile(pathData,'GLM_distance_time_PyrDown.mat'), 'all_glm_results');
+
+    plot_time_vs_distance_deviance_loglog(pathS, 'GLM_devtime_devdist_Pyrdown', all_glm_results);
+

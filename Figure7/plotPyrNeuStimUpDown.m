@@ -1,0 +1,33 @@
+function plotPyrNeuStimUpDown(pathAnal0, modPyr1AL, FRProfile1, cond)
+
+    excludeRec = [66 69 70 71 83 88]; % excluded recordings for PV activation mid cue
+    indInclRec = ones(1,length(modPyr1AL.indRec));
+    for i = 1:length(excludeRec)
+        ind = modPyr1AL.indRec == excludeRec(i);
+        indInclRec(ind) = 0;
+    end
+    
+    ind = modPyr1AL.indDriftRec & indInclRec;
+    modPyr1AL.avgFRProfile = modPyr1AL.avgFRProfile(ind,:); % average firing rate profile good trials
+    modPyr1AL.avgFRProfileStim = modPyr1AL.avgFRProfileStim(ind,:); % average firing rate profile stim trials
+    
+    %% all pyramidal neurons
+    for i = cond
+        
+        %% compare good non stim trials with stim trials, pyr rise
+        plotAvgFRProfileCmp(modPyr1AL.timeStepRun,...
+                modPyr1AL.avgFRProfile(FRProfile1{i}.indPyrRise,:),...
+                modPyr1AL.avgFRProfileStim(FRProfile1{i}.indPyrRise,:),...
+                ['FR PyrRise'],...
+                ['Pyr_FRProfilePyrRiseNoStimGoodVsStim_Cond' num2str(i)],...
+                pathAnal0,[0 3.2],[{'GoodNoStim'},{'Stim'}])
+        
+        %% compare good non stim trials with stim trials, pyr down
+        plotAvgFRProfileCmp(modPyr1AL.timeStepRun,...
+                modPyr1AL.avgFRProfile(FRProfile1{i}.indPyrDown,:),...
+                modPyr1AL.avgFRProfileStim(FRProfile1{i}.indPyrDown,:),...
+                ['FR PyrDown'],...
+                ['Pyr_FRProfilePyrDownNoStimGoodVsStim_Cond' num2str(i)],...
+                pathAnal0,[0 3.2],[{'GoodNoStim'},{'Stim'}])
+            
+    end
