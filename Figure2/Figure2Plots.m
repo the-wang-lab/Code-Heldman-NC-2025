@@ -14,3 +14,5 @@ function Figure2Plots(pathData)
     
     % Figure 2h, plot mean activity corr for neurons with firing fields, comparing aligned to cue vs run onset
     CompPyrAlignedCorrNoCueVsALPL(pathData);
+
+    
