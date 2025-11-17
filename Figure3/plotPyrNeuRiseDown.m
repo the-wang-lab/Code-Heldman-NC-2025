@@ -27,6 +27,7 @@ function plotPyrNeuRiseDown(pathData)
     %% FR Change before run vs 0to1s
     
     %% FR rel Change before run vs 0to1s
+    %% Rise
     indBadNonNan = ~isnan(FRProfileMeanPyr.RiseBad.relChangeBefRunVs0to1);
     barPlotWithStat1(1:2,...
             [mean(FRProfileMeanPyr.Rise.relChangeBefRunVs0to1),...
@@ -40,6 +41,28 @@ function plotPyrNeuRiseDown(pathData)
             '', FRProfileMeanPyrStat.RiseGoodBad.pRSRelChangeBefRunVs0to1All,...
             ['Pyr_RelFRChangeBefRun-0to1RiseGoodBad'],...
             pathAnal,1,xlabels,[-0.65 0.65]);
+
+    %% FR rel Change before run vs 0to1s violin plot
+    params = struct();
+    params.save_path = pathAnal;
+    params.variable_names_plot = {'Good', 'Bad'};
+    params.xlim = [0.5 2.5];
+    params.axisSize = [55 75];
+    params.colors = {[231 245 247]/255, [212 238 246]/255};
+    params.ShowData = false;
+    params.ViolinAlpha = [{0.7} {0.7}];
+    params.filename = 'Pyr_RelFRChangeBefRun-0to1RiseGoodBadViolin';
+
+    vars = [];
+    vars.(params.variable_names_plot{1}) = FRProfileMeanPyr.Rise.relChangeBefRunVs0to1; % Data for 'Good'
+    vars.(params.variable_names_plot{2}) = FRProfileMeanPyr.RiseBad.relChangeBefRunVs0to1(indBadNonNan); % Data for 'Bad'
+
+    params.yticks = -1:0.2:1;
+    params.ylim = [-1 1];
+
+    makeViolinFromBar(vars, params);
+
+    %% Down
         
     indBadNonNan = ~isnan(FRProfileMeanPyr.DownBad.relChangeBefRunVs0to1);
     barPlotWithStat1(1:2,...
@@ -55,4 +78,24 @@ function plotPyrNeuRiseDown(pathData)
             ['Pyr_RelFRChangeBefRun-0to1DownGoodBad'],...
             pathAnal,1,xlabels,[-0.65 0.65]);
             
+
+    %% FR rel Change before run vs 0to1s violin plot
+    params = struct();
+    params.save_path = pathAnal;
+    params.variable_names_plot = {'Good', 'Bad'};
+    params.xlim = [0.5 2.5];
+    params.axisSize = [55 75];
+    params.colors = {[231 245 247]/255, [212 238 246]/255};
+    params.ShowData = false;
+    params.ViolinAlpha = [{0.7} {0.7}];
+    params.filename = 'Pyr_RelFRChangeBefRun-0to1DownGoodBadViolin';
+
+    vars = [];
+    vars.(params.variable_names_plot{1}) = FRProfileMeanPyr.Down.relChangeBefRunVs0to1; % Data for 'Good'
+    vars.(params.variable_names_plot{2}) = FRProfileMeanPyr.DownBad.relChangeBefRunVs0to1(indBadNonNan); % Data for 'Bad'
+
+    params.yticks = -1:0.2:1;
+    params.ylim = [-1 1];
+
+    makeViolinFromBar(vars, params);
 end
